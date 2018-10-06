@@ -1207,9 +1207,9 @@ seneca-member@0.0.9:
   dependencies:
     optioner "3"
 
-seneca-msg-test@0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/seneca-msg-test/-/seneca-msg-test-0.1.0.tgz#46bb2ef0f58330bf7ed13bff0506799af25ace62"
+seneca-msg-test@0.3:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/seneca-msg-test/-/seneca-msg-test-0.3.0.tgz#08841306d8168a401df1f1649ca1c36a513d27b2"
   dependencies:
     inks "0.1"
     jsonic "0.3"
@@ -1253,7 +1253,7 @@ seneca-transport@2.3:
     gex "0.3"
     json-stringify-safe "5.0"
     jsonic "0.3"
-    lodash "4.17.11"
+    lodash "4.17"
     minimist "1.2"
     nid "0.3"
     norma "0.4"
@@ -1263,7 +1263,7 @@ seneca-transport@2.3:
     rolling-stats "0.1"
     semver "5.5"
     seneca-transport "2.3"
-    use-plugin "2.3"
+    use-plugin "github:rjrodger/use-plugin"
     wreck "12.5"
 
 shebang-command@^1.2.0:
