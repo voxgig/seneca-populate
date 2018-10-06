@@ -1,0 +1,49 @@
+{
+  "name": "seneca-populate",
+  "version": "0.2.0",
+  "description": "Seneca plugin for user and populate permissions.",
+  "main": "populate.js",
+  "scripts": {
+    "test": "lab -P test -t 80 -I URL,URLSearchParams,igUint64Array,BigInt64Array,BigInt,BigUint64Array",
+    "prettier": "prettier --write --no-semi --single-quote *.js lib/*.js test/*.js",
+    "coveralls": "lab -s -P test -r lcov | coveralls",
+    "clean": "rm -rf node_modules yarn.lock package-lock.json",
+    "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"`; echo TAG: v$REPO_VERSION; git commit -a -m v$REPO_VERSION; git push; git tag v$REPO_VERSION; git push --tags;",
+    "repo-publish": "npm run repo-tag; npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/voxgig/seneca-populate.git"
+  },
+  "author": "Richard Rodger (richardrodger.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/voxgig/seneca-populate/issues"
+  },
+  "homepage": "https://github.com/voxgig/seneca-populate#readme",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "populate.js",
+    "lib/errors.js"
+  ],
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "optioner": "1.1",
+    "seneca-msg-test": "0.2"
+  },
+  "devDependencies": {
+    "code": "4",
+    "coveralls": "3",
+    "lab": "14",
+    "prettier": "1",
+    "seneca": "github:senecajs/seneca",
+    "seneca-promisify": "0.2",
+    "seneca-entity": "2",
+    "seneca-joi": "2",
+    "seneca-member": "0.0.9",
+    "seneca-plugin-validator": "0"
+  }
+}
