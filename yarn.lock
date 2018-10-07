@@ -845,7 +845,7 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-lodash@4, lodash@4.17, lodash@4.17.11, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.3.0:
+lodash@4, lodash@4.17, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.3.0:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
 
@@ -1207,9 +1207,9 @@ seneca-member@0.0.9:
   dependencies:
     optioner "3"
 
-seneca-msg-test@0.3:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/seneca-msg-test/-/seneca-msg-test-0.3.0.tgz#08841306d8168a401df1f1649ca1c36a513d27b2"
+seneca-msg-test@0.4:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/seneca-msg-test/-/seneca-msg-test-0.4.0.tgz#d2688b0977d5ade0ce194b8fa5f4301a8de19962"
   dependencies:
     inks "0.1"
     jsonic "0.3"
@@ -1226,6 +1226,14 @@ seneca-promisify@0.2:
   resolved "https://registry.yarnpkg.com/seneca-promisify/-/seneca-promisify-0.2.0.tgz#d96b2c3360634e8d8e19cd8af74b54617404b722"
   dependencies:
     optioner "3.0"
+
+seneca-repl@1.2:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/seneca-repl/-/seneca-repl-1.2.0.tgz#0597c82cfbcdb8df8242bf653e80b325965112fb"
+  dependencies:
+    jsonic "0.3"
+    lodash "4.17"
+    optioner "1.1"
 
 seneca-transport@2.3:
   version "2.3.0"
@@ -1448,9 +1456,9 @@ uglify-js@^3.1.4:
     commander "~2.17.1"
     source-map "~0.6.1"
 
-use-plugin@2.3:
+"use-plugin@github:rjrodger/use-plugin":
   version "2.3.0"
-  resolved "https://registry.yarnpkg.com/use-plugin/-/use-plugin-2.3.0.tgz#a571163a6ad41cffd87e397cca8d4bc8437409f8"
+  resolved "https://codeload.github.com/rjrodger/use-plugin/tar.gz/1bdea535dfb3bbe03c9831ee5e66d362d91df79b"
   dependencies:
     eraro "1.0"
     nid "0.3"

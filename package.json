@@ -1,6 +1,6 @@
 {
   "name": "seneca-populate",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "Seneca plugin for user and populate permissions.",
   "main": "populate.js",
   "scripts": {
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "optioner": "1.1",
-    "seneca-msg-test": "0.3"
+    "seneca-msg-test": "0.4"
   },
   "devDependencies": {
     "code": "4",
@@ -40,10 +40,11 @@
     "lab": "14",
     "prettier": "1",
     "seneca": "github:senecajs/seneca",
-    "seneca-promisify": "0.2",
     "seneca-entity": "2",
     "seneca-joi": "2",
     "seneca-member": "0.0.9",
-    "seneca-plugin-validator": "0"
+    "seneca-plugin-validator": "0",
+    "seneca-promisify": "0.2",
+    "seneca-repl": "1.2"
   }
 }
