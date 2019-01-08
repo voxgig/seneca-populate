@@ -32,3 +32,5 @@
 [Travis]: https://travis-ci.org/voxgig/seneca-populate?branch=master
 [david-badge]: https://david-dm.org/voxgig/seneca-populate.svg
 [david-url]: https://david-dm.org/voxgig/seneca-populate
+[gitter-badge]: https://badges.gitter.im/Join%20Chat.svg
+[gitter-url]: https://gitter.im/senecajs/seneca
