@@ -2,5 +2,5 @@
 'use strict'
 
 module.exports = {
-  populate_not_active: 'Population of data is disabled by option setting populate=false.',
+  files: [__dirname + '/pop1-data0.js', __dirname + '/pop1-data1.js']
 }

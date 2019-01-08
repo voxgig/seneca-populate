@@ -1,15 +1,16 @@
 {
   "name": "seneca-populate",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Seneca plugin for user and populate permissions.",
   "main": "populate.js",
   "scripts": {
     "test": "lab -P test -t 80 -I URL,URLSearchParams,igUint64Array,BigInt64Array,BigInt,BigUint64Array",
     "prettier": "prettier --write --no-semi --single-quote *.js lib/*.js test/*.js",
     "coveralls": "lab -s -P test -r lcov | coveralls",
-    "clean": "rm -rf node_modules yarn.lock package-lock.json",
-    "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"`; echo TAG: v$REPO_VERSION; git commit -a -m v$REPO_VERSION; git push; git tag v$REPO_VERSION; git push --tags;",
-    "repo-publish": "npm run repo-tag; npm publish"
+    "clean-yarn": "rm -rf node_modules yarn.lock",
+    "clean-npm": "rm -rf node_modules package-lock.json",
+    "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
+    "repo-publish": "npm test && npm run repo-tag && npm publish"
   },
   "repository": {
     "type": "git",
@@ -31,20 +32,20 @@
     "node": ">=8"
   },
   "dependencies": {
-    "optioner": "1.1",
-    "seneca-msg-test": "0.5"
+    "optioner": "3",
+    "seneca-msg-test": "0"
   },
   "devDependencies": {
-    "code": "4",
+    "code": "5",
     "coveralls": "3",
-    "lab": "14",
+    "lab": "18",
     "prettier": "1",
-    "seneca": "github:senecajs/seneca",
+    "seneca": "senecajs/seneca",
     "seneca-entity": "2",
-    "seneca-joi": "2",
-    "seneca-member": "0.0.9",
+    "seneca-joi": "3",
+    "seneca-member": "0",
     "seneca-plugin-validator": "0",
-    "seneca-promisify": "0.2",
-    "seneca-repl": "1.2"
+    "seneca-promisify": "0",
+    "seneca-repl": "1"
   }
 }

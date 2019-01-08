@@ -11,5 +11,4 @@ Seneca()
   .use('repl')
   .use('entity')
   .use('member')
-  .use(Plugin, {populate: true,file:'a.json'})
-
+  .use(Plugin, { populate: true, file: 'a.json' })
