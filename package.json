@@ -25,8 +25,7 @@
   "files": [
     "LICENSE",
     "README.md",
-    "populate.js",
-    "lib/errors.js"
+    "populate.js"
   ],
   "engines": {
     "node": ">=8"

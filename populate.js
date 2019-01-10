@@ -20,6 +20,11 @@ module.exports.defaults = {
   strict: true, // if true, populate/import can only run if active
   once: true, // if true, populate/import can only be run once
 
+  limits: {
+    depends: 22,
+    depth: 11
+  },
+  
   folder: Joi.string()
     .min(1)
     .default(__dirname),
@@ -36,7 +41,9 @@ module.exports.errors = {
     'Specification file for data population not found: <%=specfile%>.',
   import_not_active: 'Data import not performed as disabled by plugin options.',
   import_already_run: 'Data import already run - avoiding repeat.',
-  datafile_not_found_in_folder: 'Data file not found in folder <%=folder%>.'
+  datafile_not_found_in_folder: 'Data file not found in folder <%=folder%>.',
+  exceeds_depends_limit: 'Too many dependent populate specs (max <%=max%>): <%=depends%>',
+  exceeds_depends_depth: 'Ran too deep when running dependent populate specs (max <%=max%>): <%=path%>'
 }
 
 function populate(opts) {
@@ -115,6 +122,25 @@ function populate(opts) {
 
     const specfile = opts.folder + '/' + opts.file
 
+    await intern.populate(seneca, opts, specfile)
+    
+    already_run.populate = true
+  }
+
+  return define_patterns()
+}
+
+const intern = (module.exports.intern = {
+
+  populate: async function(seneca, opts, specfile, path) {
+    path = path || []
+    path.push(specfile)
+
+    if(opts.limits.depth < path.length) {
+      seneca.fail('exceeds_depends_depth', 
+                  { max: opts.limits.depth, path:path}) 
+    }
+    
     if (!(await Util.promisify(Fs.exists)(specfile))) {
       this.fail('populate_specfile_not_found', { specfile: specfile })
     }
@@ -127,23 +153,32 @@ function populate(opts) {
         log: false,
         context: {},
         fix: '',
-        calls: []
+        calls: [],
+        depends: []
       },
       require(specfile)
     )
 
+    spec.depends = 'string' === typeof(spec.depends) ? [spec.depends] : spec.depends
+    
+    if(Array.isArray(spec.depends) && 0 < spec.depends.length) {
+      if(spec.depends < opts.limits.depends) {
+        seneca.fail('exceeds_depends_limit', 
+                    { max: opts.limits.depends, depends:spec.depends}) 
+      }
+      for( var i = 0; i < spec.depends.length; i++) {
+        var fork = seneca.util.deepextend({path:[]},{path:path})
+        await intern.populate(seneca, opts, spec.depends[i], fork.path)
+      }
+    }
+    
     var json = JSON.stringify(intern.load_data(spec, seneca.util.deepextend))
 
-    await this.post('role:mem-store,cmd:import', { json: json })
-    await Util.promisify(SenecaMsgTest.intern.run)(this, spec)
+    await seneca.post('role:mem-store,cmd:import,merge:true', { json: json })
+    await Util.promisify(SenecaMsgTest.intern.run)(seneca, spec)
+  },
+  
 
-    already_run.populate = true
-  }
-
-  return define_patterns()
-}
-
-const intern = (module.exports.intern = {
   load_data: function(spec, deepextend) {
     var data = {}
 
