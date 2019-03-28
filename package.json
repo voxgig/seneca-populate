@@ -1,6 +1,6 @@
 {
   "name": "seneca-populate",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Seneca plugin for user and populate permissions.",
   "main": "populate.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "clean-yarn": "rm -rf node_modules yarn.lock",
     "clean-npm": "rm -rf node_modules package-lock.json",
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
-    "repo-publish": "npm test && npm run repo-tag && npm publish"
+    "repo-publish": "npm run prettier && npm test && npm run repo-tag && npm publish"
   },
   "repository": {
     "type": "git",
@@ -36,15 +36,15 @@
   },
   "devDependencies": {
     "code": "5",
-    "coveralls": "3",
-    "lab": "18",
-    "prettier": "1",
-    "seneca": "senecajs/seneca",
-    "seneca-entity": "2",
-    "seneca-joi": "3",
+    "coveralls": "^3.0.3",
+    "lab": "^18.0.2",
+    "prettier": "^1.16.4",
+    "seneca": "^3.8.4",
+    "seneca-entity": "^2.5.1",
+    "seneca-joi": "^3.1.0",
     "seneca-member": "0",
     "seneca-plugin-validator": "0",
-    "seneca-promisify": "0",
+    "seneca-promisify": "^0.7.1",
     "seneca-repl": "1"
   }
 }

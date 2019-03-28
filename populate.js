@@ -24,7 +24,7 @@ module.exports.defaults = {
     depends: 22,
     depth: 11
   },
-  
+
   folder: Joi.string()
     .min(1)
     .default(__dirname),
@@ -42,8 +42,10 @@ module.exports.errors = {
   import_not_active: 'Data import not performed as disabled by plugin options.',
   import_already_run: 'Data import already run - avoiding repeat.',
   datafile_not_found_in_folder: 'Data file not found in folder <%=folder%>.',
-  exceeds_depends_limit: 'Too many dependent populate specs (max <%=max%>): <%=depends%>',
-  exceeds_depends_depth: 'Ran too deep when running dependent populate specs (max <%=max%>): <%=path%>'
+  exceeds_depends_limit:
+    'Too many dependent populate specs (max <%=max%>): <%=depends%>',
+  exceeds_depends_depth:
+    'Ran too deep when running dependent populate specs (max <%=max%>): <%=path%>'
 }
 
 function populate(opts) {
@@ -123,7 +125,7 @@ function populate(opts) {
     const specfile = opts.folder + '/' + opts.file
 
     await intern.populate(seneca, opts, specfile)
-    
+
     already_run.populate = true
   }
 
@@ -131,18 +133,19 @@ function populate(opts) {
 }
 
 const intern = (module.exports.intern = {
-
   populate: async function(seneca, opts, specfile, path) {
     path = path || []
     path.push(specfile)
 
-    if(opts.limits.depth < path.length) {
-      seneca.fail('exceeds_depends_depth', 
-                  { max: opts.limits.depth, path:path}) 
+    if (opts.limits.depth < path.length) {
+      seneca.fail('exceeds_depends_depth', {
+        max: opts.limits.depth,
+        path: path
+      })
     }
-    
+
     if (!(await Util.promisify(Fs.exists)(specfile))) {
-      this.fail('populate_specfile_not_found', { specfile: specfile })
+      seneca.fail('populate_specfile_not_found', { specfile: specfile })
     }
 
     // populate and import are mutually exclusive
@@ -159,25 +162,27 @@ const intern = (module.exports.intern = {
       require(specfile)
     )
 
-    spec.depends = 'string' === typeof(spec.depends) ? [spec.depends] : spec.depends
-    
-    if(Array.isArray(spec.depends) && 0 < spec.depends.length) {
-      if(spec.depends < opts.limits.depends) {
-        seneca.fail('exceeds_depends_limit', 
-                    { max: opts.limits.depends, depends:spec.depends}) 
+    spec.depends =
+      'string' === typeof spec.depends ? [spec.depends] : spec.depends
+
+    if (Array.isArray(spec.depends) && 0 < spec.depends.length) {
+      if (spec.depends < opts.limits.depends) {
+        seneca.fail('exceeds_depends_limit', {
+          max: opts.limits.depends,
+          depends: spec.depends
+        })
       }
-      for( var i = 0; i < spec.depends.length; i++) {
-        var fork = seneca.util.deepextend({path:[]},{path:path})
+      for (var i = 0; i < spec.depends.length; i++) {
+        var fork = seneca.util.deepextend({ path: [] }, { path: path })
         await intern.populate(seneca, opts, spec.depends[i], fork.path)
       }
     }
-    
+
     var json = JSON.stringify(intern.load_data(spec, seneca.util.deepextend))
 
     await seneca.post('role:mem-store,cmd:import,merge:true', { json: json })
     await Util.promisify(SenecaMsgTest.intern.run)(seneca, spec)
   },
-  
 
   load_data: function(spec, deepextend) {
     var data = {}

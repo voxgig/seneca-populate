@@ -176,7 +176,6 @@ lab.test('populate-files', async () => {
   expect(out.foo.bar['123456']).contains({ a: 3, b: 300 })
 })
 
-
 lab.test('depends', async () => {
   var opts = {
     populate: true,
@@ -184,12 +183,12 @@ lab.test('depends', async () => {
     file: 'pop2-spec.js'
   }
 
-  var tmp = {ents:[]}
-  
+  var tmp = { ents: [] }
+
   var si = seneca_instance(opts, null, function() {
     this.message('cmd:load', async function(msg) {
-      var ent = await this.entity('foo/bar').load$({a:msg.a})
-      tmp.ents.push({msg:msg,ent:ent})
+      var ent = await this.entity('foo/bar').load$({ a: msg.a })
+      tmp.ents.push({ msg: msg, ent: ent })
       return ent
     })
   })
@@ -197,13 +196,14 @@ lab.test('depends', async () => {
   await si.ready()
   var out = await si.post('role:mem-store,cmd:dump')
 
-  expect(out.foo.bar).equal({ aaa: { 'entity$': '-/foo/bar', a: 1, y: 100 },
-                              bbb: { 'entity$': '-/foo/bar', a: 2, y: 200 } })
-  
+  expect(out.foo.bar).equal({
+    aaa: { entity$: '-/foo/bar', a: 1, y: 100 },
+    bbb: { entity$: '-/foo/bar', a: 2, y: 200 }
+  })
+
   expect(tmp.ents.length).equals(2)
 })
 
-         
 function seneca_instance(opts, fin, custom_plugin, testmode) {
   var si = Seneca({
     strict: { result: false }

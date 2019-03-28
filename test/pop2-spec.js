@@ -4,7 +4,5 @@
 module.exports = {
   file: __dirname + '/pop2-data0.js',
   depends: __dirname + '/pop2a-spec.js',
-  calls: [
-    { pattern: 'cmd:load', params: {a:1}, result: {} }
-  ]
+  calls: [{ pattern: 'cmd:load', params: { a: 1 }, result: {} }]
 }
