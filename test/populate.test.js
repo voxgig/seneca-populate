@@ -127,7 +127,7 @@ lab.test('export_import', async () => {
   })()
 })
 
-lab.test('populate', async () => {
+lab.test('populate-basic', async () => {
   return await Util.promisify(function(fin) {
     var opts = {
       populate: true,

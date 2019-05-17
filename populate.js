@@ -181,7 +181,7 @@ const intern = (module.exports.intern = {
     var json = JSON.stringify(intern.load_data(spec, seneca.util.deepextend))
 
     await seneca.post('role:mem-store,cmd:import,merge:true', { json: json })
-    await Util.promisify(SenecaMsgTest.intern.run)(seneca, spec)
+    await SenecaMsgTest.intern.run(seneca, spec)
   },
 
   load_data: function(spec, deepextend) {
