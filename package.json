@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "optioner": "^4.0.0",
-    "seneca-msg-test": "^1.1.0"
+    "seneca-msg-test": "^1.2.0"
   },
   "devDependencies": {
     "code": "^5",

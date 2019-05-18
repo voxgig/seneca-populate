@@ -1,4 +1,4 @@
-/* Copyright (c) 2018 voxgig and other contributors, MIT License */
+/* Copyright (c) 2018-2019 voxgig and other contributors, MIT License */
 'use strict'
 
 const Util = require('util')

@@ -1,4 +1,4 @@
-/* Copyright (c) 2018 voxgig and other contributors, MIT License */
+/* Copyright (c) 2018-2019 voxgig and other contributors, MIT License */
 'use strict'
 
 const Optioner = require('optioner')
@@ -19,6 +19,9 @@ module.exports = {
       out: { q: 1 }
     },
     {
+      delegate: function() {
+        return this.delegate()
+      },
       pattern: 'get:zed',
       params: { id: '`z0:out.id`' },
       out: {}
