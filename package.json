@@ -1,6 +1,6 @@
 {
   "name": "seneca-populate",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Seneca plugin for user and populate permissions.",
   "main": "populate.js",
   "scripts": {
@@ -26,7 +26,8 @@
   "files": [
     "LICENSE",
     "README.md",
-    "populate.js"
+    "populate.js",
+    "populate-docs.js"
   ],
   "engines": {
     "node": ">=8"
