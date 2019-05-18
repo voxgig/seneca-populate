@@ -4,9 +4,9 @@
 const Util = require('util')
 const Fs = require('fs')
 
-const Optioner = require('optioner')
-const Joi = Optioner.Joi
+const Joi = require('@hapi/joi')
 
+const Docs = require('./populate-docs.js')
 const SenecaMsgTest = require('seneca-msg-test')
 
 module.exports = populate
@@ -69,6 +69,10 @@ function populate(opts) {
         }
       })
   }
+
+  Object.assign(cmd_import, Docs.cmd_import)
+  Object.assign(cmd_export, Docs.cmd_export)
+  Object.assign(cmd_populate, Docs.cmd_populate)
 
   async function cmd_import(msg) {
     if (opts.strict && !opts.import) {

@@ -1,5 +1,5 @@
 # seneca-populate
-[Seneca](senecajs.org) plugin for user and populate membership.
+[Seneca](senecajs.org) plugin for data population.
 
 [![Npm][BadgeNpm]][Npm]
 [![Dependency Status][david-badge]][david-url]
@@ -15,11 +15,48 @@
 ```
 
 
-## Inbound Messages
+<!--START:action-list-->
+
+
+## Action Patterns
+
+* [cmd:import,role:populate](#-cmdimportrolepopulate-)
+* [cmd:export,role:populate](#-cmdexportrolepopulate-)
+* [cmd:populate,role:populate](#-cmdpopulaterolepopulate-)
+
+
+<!--END:action-list-->
+
+<!--START:action-desc-->
+
+
+## Action Descriptions
+
+### &laquo; `cmd:import,role:populate` &raquo;
+
+Import a JSON data file (using seneca-mem-store dump format).
 
 
 
-## Implementations
+----------
+### &laquo; `cmd:export,role:populate` &raquo;
+
+Export a JSON data file (using seneca-mem-store dump format).
+
+
+
+----------
+### &laquo; `cmd:populate,role:populate` &raquo;
+
+Import JSON data (using seneca-mem-store) and run data construction messages (using seneca-msg-test).
+
+
+
+----------
+
+
+<!--END:action-desc-->
+
 
 
 

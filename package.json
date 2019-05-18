@@ -1,16 +1,17 @@
 {
   "name": "seneca-populate",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Seneca plugin for user and populate permissions.",
   "main": "populate.js",
   "scripts": {
-    "test": "lab -P test -t 80 -I URL,URLSearchParams,igUint64Array,BigInt64Array,BigInt,BigUint64Array",
+    "test": "lab -P test -t 80",
+    "doc": "seneca-doc",
     "prettier": "prettier --write --no-semi --single-quote *.js lib/*.js test/*.js",
     "coveralls": "lab -s -P test -r lcov | coveralls",
     "clean-yarn": "rm -rf node_modules yarn.lock",
     "clean-npm": "rm -rf node_modules package-lock.json",
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
-    "repo-publish": "npm run prettier && npm test && npm run repo-tag && npm publish"
+    "repo-publish": "npm run doc && npm run prettier && npm test && npm run repo-tag && npm publish"
   },
   "repository": {
     "type": "git",
@@ -31,7 +32,7 @@
     "node": ">=8"
   },
   "dependencies": {
-    "optioner": "^4.0.0",
+    "@hapi/joi": "^15.0.3",
     "seneca-msg-test": "^1.2.0"
   },
   "devDependencies": {
@@ -40,6 +41,7 @@
     "lab": "^18.0.2",
     "prettier": "^1.17.1",
     "seneca": "^3.11.0",
+    "seneca-doc": "^0.1.2",
     "seneca-entity": "^4.0.0",
     "seneca-joi": "^4.0.1",
     "seneca-member": "^0",
