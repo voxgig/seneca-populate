@@ -1,6 +1,6 @@
 {
   "name": "seneca-populate",
-  "version": "1.3.1",
+  "version": "1.4.0",
   "description": "Seneca plugin for user and populate permissions.",
   "main": "populate.js",
   "scripts": {
@@ -8,10 +8,10 @@
     "doc": "seneca-doc",
     "prettier": "prettier --write --no-semi --single-quote *.js lib/*.js test/*.js",
     "coveralls": "lab -s -P test -r lcov | coveralls",
-    "clean-yarn": "rm -rf node_modules yarn.lock",
-    "clean-npm": "rm -rf node_modules package-lock.json",
+    "reset": "npm run clean && npm i && npm test",
+    "clean": "rm -rf node_modules package-lock.json yarn.lock",
     "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
-    "repo-publish": "npm run doc && npm run prettier && npm test && npm run repo-tag && npm publish --access public --registry=http://registry.npmjs.org"
+    "repo-publish": "npm run clean && npm i --registry=http://registry.npmjs.org && REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && npm run prettier && npm test && npm run repo-tag && npm publish --access public --registry=http://registry.npmjs.org"
   },
   "repository": {
     "type": "git",
@@ -33,21 +33,21 @@
     "node": ">=8"
   },
   "dependencies": {
-    "@hapi/joi": "^15.1.1",
-    "seneca-msg-test": "^1.3.1"
+    "@hapi/joi": "^17.1.0",
+    "seneca-msg-test": "^2.2.0"
   },
   "devDependencies": {
-    "@hapi/code": "^6.0.0",
-    "@hapi/lab": "^20.2.2",
-    "coveralls": "^3.0.6",
-    "prettier": "^1.18.2",
-    "seneca": "^3.15.1",
-    "seneca-doc": "^1.3.1",
-    "seneca-entity": "^5.1.2",
-    "seneca-joi": "^4.1.0",
+    "@hapi/code": "^8.0.1",
+    "@hapi/lab": "^22.0.3",
+    "coveralls": "^3.0.9",
+    "prettier": "^1.19.1",
+    "seneca": "^3.20.0",
+    "seneca-doc": "^2.0.1",
+    "seneca-entity": "^7.0.0",
+    "seneca-joi": "^7.0.1",
     "seneca-member": "^0",
     "seneca-plugin-validator": "0",
-    "seneca-promisify": "^1.1.0",
-    "@seneca/repl": "^1.5.1"
+    "seneca-promisify": "^1.2.0",
+    "@seneca/repl": "^2.1.1"
   }
 }

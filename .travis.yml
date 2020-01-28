@@ -5,6 +5,8 @@ env:
   - SENECA_VER=senecajs/seneca
 
 node_js:
+  - '13'
+  - '12'
   - '10'
   - '8'
 
