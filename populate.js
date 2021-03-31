@@ -22,16 +22,12 @@ module.exports.defaults = {
 
   limits: {
     depends: 22,
-    depth: 11
+    depth: 11,
   },
 
-  folder: Joi.string()
-    .min(1)
-    .default(__dirname),
+  folder: Joi.string().min(1).default(__dirname),
   file: Joi.string().min(1), // if null, load most recent
-  prefix: Joi.string()
-    .min(1)
-    .default('seneca-dump-')
+  prefix: Joi.string().min(1).default('seneca-dump-'),
 }
 module.exports.errors = {
   populate_not_active:
@@ -45,7 +41,7 @@ module.exports.errors = {
   exceeds_depends_limit:
     'Too many dependent populate specs (max <%=max%>): <%=depends%>',
   exceeds_depends_depth:
-    'Ran too deep when running dependent populate specs (max <%=max%>): <%=path%>'
+    'Ran too deep when running dependent populate specs (max <%=max%>): <%=path%>',
 }
 
 function populate(opts) {
@@ -53,7 +49,7 @@ function populate(opts) {
 
   const already_run = {
     populate: false,
-    import: false
+    import: false,
   }
 
   function define_patterns() {
@@ -61,7 +57,7 @@ function populate(opts) {
       .message('role:populate,cmd:import', cmd_import)
       .message('role:populate,cmd:export', cmd_export)
       .message('role:populate,cmd:populate', cmd_populate)
-      .prepare(async function() {
+      .prepare(async function () {
         if (opts.populate) {
           await this.post('role:populate,cmd:populate')
         } else if (opts.import) {
@@ -87,7 +83,7 @@ function populate(opts) {
 
     if (null == datafile) {
       const files = (await Util.promisify(Fs.readdir)(opts.folder))
-        .filter(x => x.startsWith(opts.prefix))
+        .filter((x) => x.startsWith(opts.prefix))
         .sort()
 
       // most recent, as file name is <prefix><timestamp>.json
@@ -137,14 +133,14 @@ function populate(opts) {
 }
 
 const intern = (module.exports.intern = {
-  populate: async function(seneca, opts, specfile, path) {
+  populate: async function (seneca, opts, specfile, path) {
     path = path || []
     path.push(specfile)
 
     if (opts.limits.depth < path.length) {
       seneca.fail('exceeds_depends_depth', {
         max: opts.limits.depth,
-        path: path
+        path: path,
       })
     }
 
@@ -161,7 +157,7 @@ const intern = (module.exports.intern = {
         context: {},
         fix: '',
         calls: [],
-        depends: []
+        depends: [],
       },
       require(specfile)
     )
@@ -173,7 +169,7 @@ const intern = (module.exports.intern = {
       if (spec.depends < opts.limits.depends) {
         seneca.fail('exceeds_depends_limit', {
           max: opts.limits.depends,
-          depends: spec.depends
+          depends: spec.depends,
         })
       }
       for (var i = 0; i < spec.depends.length; i++) {
@@ -188,7 +184,7 @@ const intern = (module.exports.intern = {
     await SenecaMsgTest.intern.run(seneca, spec)
   },
 
-  load_data: function(spec, deepextend) {
+  load_data: function (spec, deepextend) {
     var data = {}
 
     if ('string' === typeof spec.data) {
@@ -208,5 +204,5 @@ const intern = (module.exports.intern = {
     }
 
     return data
-  }
+  },
 })

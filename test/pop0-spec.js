@@ -10,21 +10,21 @@ module.exports = {
     {
       pattern: 'list:foo_bar',
       params: {},
-      out: { items: [{ a: 1 }] }
+      out: { items: [{ a: 1 }] },
     },
     {
       name: 'z0',
       pattern: 'add:zed',
       params: { id: 'z0', q: 1 },
-      out: { q: 1 }
+      out: { q: 1 },
     },
     {
-      delegate: function() {
+      delegate: function () {
         return this.delegate()
       },
       pattern: 'get:zed',
       params: { id: '`z0:out.id`' },
-      out: {}
-    }
-  ]
+      out: {},
+    },
+  ],
 }

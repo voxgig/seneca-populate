@@ -59,7 +59,7 @@ lab.test('intern', async () => {
     Plugin.intern.load_data(
       {
         data: { a: 1 },
-        files: [__dirname + '/data0.js', __dirname + '/data1.json']
+        files: [__dirname + '/data0.js', __dirname + '/data1.json'],
       },
       Seneca.util.deepextend
     )
@@ -67,14 +67,14 @@ lab.test('intern', async () => {
 })
 
 lab.test('export_import', async () => {
-  return await Util.promisify(function(fin) {
+  return await Util.promisify(function (fin) {
     var opts = { strict: false, once: false, folder: __dirname + '/data' }
     var b = Date.now()
 
     var si0 = seneca_instance(opts, fin)
 
-    si0.make('foo/bar', { a: 1, b: b }).save$(function() {
-      si0.act('role:populate,cmd:export', function() {
+    si0.make('foo/bar', { a: 1, b: b }).save$(function () {
+      si0.act('role:populate,cmd:export', function () {
         var si1 = seneca_instance(
           Object.assign(opts, { once: true }),
           null,
@@ -82,8 +82,8 @@ lab.test('export_import', async () => {
           false
         )
 
-        si1.act('role:populate,cmd:import', function() {
-          si1.make('foo/bar').load$({ a: 1 }, function(err, foo_bar) {
+        si1.act('role:populate,cmd:import', function () {
+          si1.make('foo/bar').load$({ a: 1 }, function (err, foo_bar) {
             expect(foo_bar.a).equal(1)
             expect(foo_bar.b).equal(b)
 
@@ -92,13 +92,13 @@ lab.test('export_import', async () => {
               { import: true, folder: __dirname + '/data' },
               fin
             )
-            si2.ready(function() {
-              this.act('role:mem-store,cmd:dump', function(err, out) {
-                si2.make('foo/bar').load$({ a: 1 }, function(err, foo_bar) {
+            si2.ready(function () {
+              this.act('role:mem-store,cmd:dump', function (err, out) {
+                si2.make('foo/bar').load$({ a: 1 }, function (err, foo_bar) {
                   expect(foo_bar.a).equal(1)
                   expect(foo_bar.b).equal(b)
 
-                  si1.act('role:populate,cmd:import', function(err) {
+                  si1.act('role:populate,cmd:import', function (err) {
                     expect(err.code).equal('import_already_run')
 
                     var si3 = seneca_instance(
@@ -107,7 +107,7 @@ lab.test('export_import', async () => {
                       null,
                       false
                     )
-                    si3.act('role:populate,cmd:import', function(err) {
+                    si3.act('role:populate,cmd:import', function (err) {
                       expect(err.code).equal('import_not_active')
                       fin()
                     })
@@ -123,32 +123,30 @@ lab.test('export_import', async () => {
 })
 
 lab.test('populate-basic', async () => {
-  return await Util.promisify(function(fin) {
+  return await Util.promisify(function (fin) {
     var opts = {
       populate: true,
       folder: __dirname,
-      file: 'pop0-spec.js'
+      file: 'pop0-spec.js',
     }
 
-    var custom_plugin = function() {
-      this.add('list:foo_bar', function(msg, reply) {
-        this.make('foo/bar').list$(function(err, items) {
+    var custom_plugin = function () {
+      this.add('list:foo_bar', function (msg, reply) {
+        this.make('foo/bar').list$(function (err, items) {
           reply({ items: items })
         })
       })
-        .add('add:zed', function(msg, reply) {
-          this.make('zed')
-            .data$({ id$: msg.id, q: msg.q })
-            .save$(reply)
+        .add('add:zed', function (msg, reply) {
+          this.make('zed').data$({ id$: msg.id, q: msg.q }).save$(reply)
         })
-        .add('get:zed', function(msg, reply) {
+        .add('get:zed', function (msg, reply) {
           this.make('zed').load$(msg.id, reply)
         })
     }
 
     var si = seneca_instance(opts, fin, custom_plugin)
 
-    si.act('role:mem-store,cmd:dump', function(err, out) {
+    si.act('role:mem-store,cmd:dump', function (err, out) {
       expect(out.foo.bar['4mqccf']).contains({ a: 1, b: 100 })
       expect(out[undefined].zed['z0']).contains({ q: 1 })
 
@@ -161,7 +159,7 @@ lab.test('populate-files', async () => {
   var opts = {
     populate: true,
     folder: __dirname,
-    file: 'pop1-spec.js'
+    file: 'pop1-spec.js',
   }
 
   var si = seneca_instance(opts)
@@ -175,13 +173,13 @@ lab.test('depends', async () => {
   var opts = {
     populate: true,
     folder: __dirname,
-    file: 'pop2-spec.js'
+    file: 'pop2-spec.js',
   }
 
   var tmp = { ents: [] }
 
-  var si = seneca_instance(opts, null, function() {
-    this.message('cmd:load', async function(msg) {
+  var si = seneca_instance(opts, null, function () {
+    this.message('cmd:load', async function (msg) {
       var ent = await this.entity('foo/bar').load$({ a: msg.a })
       tmp.ents.push({ msg: msg, ent: ent })
       return ent
@@ -193,7 +191,7 @@ lab.test('depends', async () => {
 
   expect(out.foo.bar).equal({
     aaa: { entity$: '-/foo/bar', a: 1, y: 100 },
-    bbb: { entity$: '-/foo/bar', a: 2, y: 200 }
+    bbb: { entity$: '-/foo/bar', a: 2, y: 200 },
   })
 
   expect(tmp.ents.length).equals(2)
@@ -201,7 +199,7 @@ lab.test('depends', async () => {
 
 function seneca_instance(opts, fin, custom_plugin, testmode) {
   var si = Seneca({
-    strict: { result: false }
+    strict: { result: false },
   })
 
   if (false === testmode) {
@@ -210,10 +208,7 @@ function seneca_instance(opts, fin, custom_plugin, testmode) {
     si.test(fin, testmode)
   }
 
-  si.use('promisify')
-    .use('seneca-joi')
-    .use('entity')
-    .use('member')
+  si.use('promisify').use('seneca-joi').use('entity').use('member')
 
   if (custom_plugin) {
     si.use(custom_plugin)
